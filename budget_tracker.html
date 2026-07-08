@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Budget Dynamic Tracker</title>
+
+<style>
+body {
+    font-family: Arial;
+    background: #0f172a;
+    color: white;
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+}
+
+.container {
+    width: 380px;
+    background: #1e293b;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+h2 {
+    text-align: center;
+    color: #38bdf8;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 8px;
+    border: none;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    background: #38bdf8;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.item {
+    display: flex;
+    gap: 5px;
+    margin: 5px 0;
+}
+
+.item input {
+    flex: 1;
+}
+
+.result {
+    margin-top: 15px;
+    background: #0f172a;
+    padding: 10px;
+    border-radius: 10px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+    <h2>Budget Tracker 💰</h2>
+
+    <input type="number" id="salary" placeholder="Gaji (RM)">
+
+    <div id="items"></div>
+
+    <button onclick="addItem()">+ Tambah Perbelanjaan</button>
+    <button onclick="calculate()">Kira Baki</button>
+
+    <div class="result">
+        <div>Gaji: <span id="showSalary">RM0</span></div>
+        <div>Total Belanja: <span id="showExpense">RM0</span></div>
+        <div>Baki: <span id="showBalance">RM0</span></div>
+    </div>
+</div>
+
+<script>
+
+function addItem() {
+    let div = document.createElement("div");
+    div.className = "item";
+
+    div.innerHTML = `
+        <input type="text" placeholder="Nama (cth: mkn)">
+        <input type="number" placeholder="RM">
+    `;
+
+    document.getElementById("items").appendChild(div);
+}
+
+function calculate() {
+    let salary = Number(document.getElementById("salary").value) || 0;
+
+    let items = document.querySelectorAll(".item");
+    let total = 0;
+
+    items.forEach(item => {
+        let value = item.querySelectorAll("input")[1].value;
+        total += Number(value) || 0;
+    });
+
+    let balance = salary - total;
+
+    document.getElementById("showSalary").innerText = "RM" + salary;
+    document.getElementById("showExpense").innerText = "RM" + total;
+    document.getElementById("showBalance").innerText = "RM" + balance;
+}
+
+</script>
+
+</body>
+</html>
